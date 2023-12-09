@@ -1,0 +1,14 @@
+2. drony
+
+Roj M dronov sa nachádza vo formácii urcenej pozíciami (xb1, yb1), . . . ,(xbM, ybM). 
+(Pre jednoduchost uvazujeme len rovinnú situáciu, nie priestorovú.) Cielom je, aby sa tento roj preskupil
+do novej formácie, ktorá pozostáva z pozícií {(xf1, yf1), . . . ,(xfM, yfM)}. Kazdý dron letí rovnako
+rýchlo. Tiez predpokladáme, ze si drony navzájom neprekázajú, cize všetky drony budú letieť k svojej určenej pozícii po priamke. Napíšte program, ktorého vstupom bude postupnosť B = (xb1, yb1), . . . ,(xbM, ybM) a množina pozícií F = {(xf1, yf1), . . . ,(xfM, yfM)} požadovanej formácie a výstupom bude priradenie, ktorý z dronov má letie´ ku ktorému bodu z F. Chceme pritom minimalizovať Lp-normu (Sum i=1 to M t_i^p)^(1/p), kde t_1, . . . , t_M sú časy letov dronov do dosiahnutia ich určenej pozície v F a p ∈ [1,∞) je ďalší vstupný parameter. Všimnite si, že ak p = 1, tak minimalizujeme celkovú preletenú trasu, čiže cca celkovú spotrebu energie a pre p → ∞ minimalizujeme čas, za ktorý roj nadobudne F. Iné hodnoty parametra p môžu reprezentovať kompromis medzi ekonomickosťou a rýchlosťou dosiahnutia F Táto úloha má blízko k úlohám označovaným ako assignment problems.
+
+
+8. kaviaren
+
+Máme obdlznikovú kaviaren rozmerov Lx×Ly metrov, do ktorej chceme umiestnit n okrúhlych
+stolov s polomerom r. Napíste program, ktorého vstupom bude Lx, Ly, r, n a výstupom bude zoznam súradníc stredov stolov, tak, aby vzdialenost dvoch najblizsích stolov bola maximálna
+mozná. Pomôcka: Táto úloha je velmi príbuzná úlohe, ktorá je známa pod anglickým názvom
+circle packing problem.
