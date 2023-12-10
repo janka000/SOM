@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.patches import Circle
+from matplotlib.animation import FuncAnimation
 
 def differential_evolution_table_placement(Lx, Ly, r, n, max_generations=100, draw_after_each_iteration=False):
     # Initialization of the population
@@ -8,7 +9,13 @@ def differential_evolution_table_placement(Lx, Ly, r, n, max_generations=100, dr
 
     optimal_positions = []
 
-    for generation in range(max_generations):
+    fig, ax = plt.subplots()
+    ax.set_xlim(0, Lx)
+    ax.set_ylim(0, Ly)
+
+    def update(frame):
+        nonlocal population
+
         for i in range(n):
             # Mutation
             indices = [idx for idx in range(n) if idx != i]
@@ -23,17 +30,15 @@ def differential_evolution_table_placement(Lx, Ly, r, n, max_generations=100, dr
             if objective_function(trial, Lx, Ly, r) > objective_function(population[i], Lx, Ly, r) and constraints(trial, Lx, Ly, r):
                 population[i] = trial
 
-        if draw_after_each_iteration:
-            # Visualization of results after each iteration
-            plot_results(Lx, Ly, population, r)
+        # Visualization of results after each iteration
+        plot_results(ax, Lx, Ly, population, r)
 
         # Finding the best solution
         best_index = np.argmax([objective_function(ind, Lx, Ly, r) for ind in population])
         optimal_positions.append(tuple(population[best_index]))
 
-    if not draw_after_each_iteration:
-        # Visualization of final results
-        plot_results(Lx, Ly, population, r)
+    anim = FuncAnimation(fig, update, frames=max_generations, repeat=False)
+    plt.show()
 
     return optimal_positions
 
@@ -62,8 +67,8 @@ def constraints(positions, Lx, Ly, r):
 
     return True
 
-def plot_results(Lx, Ly, positions, r):
-    fig, ax = plt.subplots()
+def plot_results(ax, Lx, Ly, positions, r):
+    ax.clear()
     ax.set_xlim(0, Lx)
     ax.set_ylim(0, Ly)
 
@@ -76,11 +81,10 @@ def plot_results(Lx, Ly, positions, r):
     rectangle = plt.Rectangle((0, 0), Lx, Ly, fill=False, edgecolor='red', linewidth=2)
     ax.add_artist(rectangle)
 
-    plt.gca().set_aspect('equal', adjustable='box')
-    plt.title('Optimal Table Placement')
-    plt.xlabel('X-axis')
-    plt.ylabel('Y-axis')
-    plt.show()
+    ax.set_aspect('equal', adjustable='box')
+    ax.set_title('Optimal Table Placement')
+    ax.set_xlabel('X-axis')
+    ax.set_ylabel('Y-axis')
 
 if __name__ == "__main__":
     Lx = 30  # Width of the cafe
