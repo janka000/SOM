@@ -16,7 +16,7 @@ class Individual:
         for i in range(self.M):
             s+=dist(self.initial_positions[i][0],self.initial_positions[i][1], self.final_positions[i][0], self.final_positions[i][1]) ** self.p  #summing distances between dron start positions and final positions (dron i starts at pos. initial_positions[i] and ends at final_positions[i])                      
         Lp = s ** (1/self.p) 
-        #print("new Lp.. :",Lp)
+
                        
         self.fitness = - Lp # fitness is something we want to maximize, therefore, if we want to minimize the sum of distances, we have to use -Lp norm as fitness
         return self.fitness
@@ -44,13 +44,13 @@ def print_matching(individual):
 def plot_movement(ax, initial_positions, final_positions, best_positions, current_positions, current_iteration, current_fitness, best_iteration, best_fitness):
     ax.cla()
 
-    # Plot the connections from initial positions to the best positions in dashed red lines
+    # plot the connections from initial positions to the best positions (dashed red lines)
     for i in range(len(initial_positions)):
         x_values = [initial_positions[i][0], best_positions[i][0]]
         y_values = [initial_positions[i][1], best_positions[i][1]]
         ax.plot(x_values, y_values, linestyle='dashed', color='red', alpha=0.5, label='_nolegend_')  
 
-    # Plot the connections from initial positions to the current positions in solid gray lines
+    # plot the connections from initial positions to the current positions ( solid gray lines )
     for i in range(len(initial_positions)):
         x_values = [initial_positions[i][0], current_positions[i][0]]
         y_values = [initial_positions[i][1], current_positions[i][1]]
@@ -59,7 +59,7 @@ def plot_movement(ax, initial_positions, final_positions, best_positions, curren
     ax.scatter(*zip(*initial_positions), label='Init Positions', marker='o', s=100, color="#34aeeb")
     ax.scatter(*zip(*final_positions), label='Final Positions', marker='*', s=100, color="#ebd234")
 
-    # Create a custom legend with "Best Solution," "Current Solution," "Start Points," and "End Points"
+    # create a custom legend with "Best Solution," "Current Solution," "Start Points," and "End Points"
     custom_legend = [
         ax.plot([], [], linestyle='dashed', color='red', alpha=0.5)[0],
         ax.plot([], [], linestyle='-', color='gray', alpha=0.8)[0],
@@ -122,12 +122,11 @@ def genetic_algorithm(M, p, initial_positions, final_positions, population_size=
         new_population = offspring + copy.deepcopy(parents)
         new_population.sort(key=lambda x: -x.fitness) #sort individuals by fitness (bigger fitness is better, therefore - in lambda expr.)
         population = new_population[:population_size] #survival of the fittest (take the best ones)
-        #print(str([p.fitness for p in population]))
 
         current_best = max(population, key=lambda x: x.fitness) #maximize fitness
         current_positions = current_best.final_positions
 
-        #update best solution if the current is better or equal 
+        # update best solution if the current is better or equal 
         if current_best.fitness >= best_individual.fitness:
             best_individual = current_best
             best_positions = current_positions
@@ -156,7 +155,7 @@ def genetic_algorithm(M, p, initial_positions, final_positions, population_size=
     print_matching(best_individual)
     print("Best Fitness:", best_individual.fitness)
 
-    # Draw the best solution at the end
+    # draw the best solution at the end
     fig, ax = plt.subplots(figsize=(8, 8))
     plot_movement(ax, initial_positions, final_positions, best_positions, best_positions, generations-1, current_best.fitness, best_generation, best_individual.fitness)
     plt.show()
