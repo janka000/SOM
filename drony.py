@@ -134,7 +134,7 @@ def genetic_algorithm(M, p, initial_positions, final_positions, population_size=
             best_generation = generation
 
         if draw_after_each_it:
-            plot_movement(ax, initial_positions, F, best_positions, current_positions, generation, current_best.fitness, best_generation, best_individual.fitness)
+            plot_movement(ax, initial_positions, final_positions, best_positions, current_positions, generation, current_best.fitness, best_generation, best_individual.fitness)
 
     if draw_after_each_it:
         ani = FuncAnimation(plt.gcf(), update, frames=enumerate([None] * generations), repeat=False)
@@ -158,54 +158,88 @@ def genetic_algorithm(M, p, initial_positions, final_positions, population_size=
 
     # Draw the best solution at the end
     fig, ax = plt.subplots(figsize=(8, 8))
-    plot_movement(ax, initial_positions, F, best_positions, best_positions, generations-1, current_best.fitness, best_generation, best_individual.fitness)
+    plot_movement(ax, initial_positions, final_positions, best_positions, best_positions, generations-1, current_best.fitness, best_generation, best_individual.fitness)
     plt.show()
 
-
+class Test:
+    def M5_simple_A():
+       M = 5  # pocet dronov
+       p = 1  # parameter p pre Lp-normu
+       population_size = 100
+       generations = 100
+       crossover_prob = 0.2
+       mutation_prob = 0.5   
+    
+       initial_positions = [(2,10),(2, 12),(2, 15),(2,17),(2,20)]
+       F = [(4,10),(3, 12),(4, 15),(3,17),(4,20)]
+       
+       genetic_algorithm(M, p, initial_positions, F, population_size=population_size, generations=generations, crossover_prob=crossover_prob, mutation_prob=mutation_prob, draw_after_each_it=False, print_after_each_it=False)
+   
+    def M5_simple_B():
+       M = 5  # pocet dronov
+       p = 1  # parameter p pre Lp-normu
+       population_size = 100
+       generations = 100
+       crossover_prob = 0.2
+       mutation_prob = 0.5   
+    
+       initial_positions = [(10,2),(12,2),(15,2),(17,2),(20,2)]
+       F = [(10,3),(12,4),(15,5),(17,6),(20,7)]
+       
+       genetic_algorithm(M, p, initial_positions, F, population_size=population_size, generations=generations, crossover_prob=crossover_prob, mutation_prob=mutation_prob, draw_after_each_it=False, print_after_each_it=False)
+   
+    def M10_simple_A():
+       M = 10  # pocet dronov
+       p = 1  # parameter p pre Lp-normu
+       population_size = 100
+       generations = 100
+       crossover_prob = 0.2
+       mutation_prob = 0.5   
+    
+       initial_positions = [(2,10),(2, 12),(2, 15),(2,17),(2,20),(2,22),(2, 24),(2, 26),(2,28),(2,31)]
+       F = [(4,10),(3, 12),(4, 15),(3,17),(4,20),(5,22),(3, 24),(4, 26),(3,28),(4,31)] 
+       
+       genetic_algorithm(M, p, initial_positions, F, population_size=population_size, generations=generations, crossover_prob=crossover_prob, mutation_prob=mutation_prob, draw_after_each_it=False, print_after_each_it=False)
+   
+    def M10_simple_B():
+        M = 10  # pocet dronov
+        p = 1  # parameter p pre Lp-normu
+        population_size = 100
+        generations = 100
+        crossover_prob = 0.2
+        mutation_prob = 0.5   
+    
+        initial_positions = [(10,2),(12,2),(15,2),(17,2),(20,2),(23,2),(25,2),(27,2),(29,2),(30,2)]
+        F = [(10,3),(12,4),(15,5),(17,6),(20,7),(23,3),(25,4),(27,5),(29,10),(30,9)]
+        
+        genetic_algorithm(M, p, initial_positions, F, population_size=population_size, generations=generations, crossover_prob=crossover_prob, mutation_prob=mutation_prob, draw_after_each_it=False, print_after_each_it=False)
+   
+    def random_10x10(M_drons, animated = False):
+        M = M_drons  # pocet dronov
+        p = 1  # parameter p pre Lp-normu
+        population_size = M*10
+        generations = 100
+        crossover_prob = 0.2
+        mutation_prob = 0.5   
+    
+        #generate random initial and end positions
+        initial_positions = [(random.uniform(0, 10), random.uniform(0, 10)) for _ in range(M)]
+        F = [(random.uniform(0, 10), random.uniform(0, 10)) for _ in range(M)] 
+        
+        genetic_algorithm(M, p, initial_positions, F, population_size=population_size, generations=generations, crossover_prob=crossover_prob, mutation_prob=mutation_prob, draw_after_each_it=animated, print_after_each_it=False)
 
 
 if __name__ == "__main__":
 
-
-    #random initaizlization
-    """    
-    M = 20  # pocet dronov
-    p = 1  # parameter p pre Lp-normu
-    population_size = 500
-    generations = 100
-    crossover_prob = 0.2
-    mutation_prob = 0.5   
     
-    #generate random initial and end positions
-    initial_positions = [(random.uniform(0, 10), random.uniform(0, 10)) for _ in range(M)]
-    F = [(random.uniform(0, 10), random.uniform(0, 10)) for _ in range(M)]
-    """
+    Test.M5_simple_A()
+    Test.M5_simple_B()
     
-    #priklady v ktorych je riesenie "evidentne"
+    Test.M10_simple_A()
+    Test.M10_simple_B()
     
-    """
-    M = 5  # pocet dronov
-    p = 1  # parameter p pre Lp-normu
-    population_size = 100
-    generations = 100
-    crossover_prob = 0.2
-    mutation_prob = 0.5   
+    Test.random_10x10(10)
+    Test.random_10x10(20)
     
-    initial_positions = [(2,10),(2, 12),(2, 15),(2,17),(2,20)]
-    F = [(4,10),(3, 12),(4, 15),(3,17),(4,20)]
-    """
-    
-    """
-    M = 10  # pocet dronov
-    p = 1  # parameter p pre Lp-normu
-    population_size = 100
-    generations = 100
-    crossover_prob = 0.2
-    mutation_prob = 0.5   
-    
-    initial_positions = [(2,10),(2, 12),(2, 15),(2,17),(2,20),(2,22),(2, 24),(2, 26),(2,28),(2,31)]
-    F = [(4,10),(3, 12),(4, 15),(3,17),(4,20),(5,22),(3, 24),(4, 26),(3,28),(4,31)] 
-    """
-
-    genetic_algorithm(M, p, initial_positions, F, population_size=population_size, generations=generations, crossover_prob=crossover_prob, mutation_prob=mutation_prob, draw_after_each_it=False, print_after_each_it=True)
+    Test.random_10x10(15, animated = True)
 
