@@ -75,8 +75,8 @@ def plot_movement(ax, initial_positions, final_positions, best_positions, curren
     ax.text(0.05, 0.15, f'Best Iteration: {best_iteration}', transform=ax.transAxes, color='red', fontsize=10)
     ax.text(0.05, 0.20, f'Best Fitness: {best_fitness}', transform=ax.transAxes, color='red', fontsize=10)
 
-    ax.set_xlabel('X')
-    ax.set_ylabel('Y')
+    ax.set_xlabel('x')
+    ax.set_ylabel('y')
     ax.set_title('Drones')
 
 

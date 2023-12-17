@@ -60,16 +60,21 @@ class InitialPopulation:
 
 
 
-def differential_evolution_table_placement(Lx, Ly, r, n, F = 0.7, crossover_prob = 0.5, population_size=1000, max_generations=1000, draw_after_each_it=False):
+def differential_evolution_table_placement(Lx, Ly, r, n, F = 0.7, crossover_prob = 0.5, population_size=1000, max_generations=1000, draw_after_each_it=False, init="random"):
     
-    #population = InitialPopulation.grid(Lx, Ly, r, n, population_size, draw_init=False, print_check=False)
-    population = InitialPopulation.random(Lx, Ly, r, n, population_size, draw_init=False, print_check=False)
+    if init=="random":
+        population = InitialPopulation.random(Lx, Ly, r, n, population_size, draw_init=False, print_check=False)
+    elif init=="grid":
+        population = InitialPopulation.grid(Lx, Ly, r, n, population_size, print_check=False)
+    else:
+        print("unknown init startegy")
+        exit(1)
     
     print("finished initialization")
     generation = 0
     best_generation = 0
     
-    # Find the best solution in the init. population
+    # find the best solution in the init. population
     best_index = np.argmax([objective_function(ind, Lx, Ly, r, n) for ind in population])
     best_solution = population[best_index]
     print("best solution in init. population:", best_index, "is feasible?:", constraints(best_solution, Lx, Ly, r, n))
@@ -171,7 +176,7 @@ def mutate(population, population_size, i, F, Lx, Ly, r):
 
 def objective_function(positions, Lx, Ly, r, n):
     # objective function - in our case something we want to MAXIMIZE (we want to maximize minimal distance), 
-    # so the objective function will be minimal distance between the table 
+    # so the objective function will be minimal distance between the tables 
     min_distance = float('inf')
 
     for i in range(n):
@@ -200,7 +205,7 @@ def plot_results(ax, Lx, Ly, positions, r, n, generations, best_index, best_gene
     ax.set_xlim(0, Lx)
     ax.set_ylim(0, Ly)
 
-    # Plotting the cafe floor, because why not
+    # plotting the cafe floor, because why not
     rectangle = plt.Rectangle((0, 0), Lx, Ly, fill=True, color='gray', linewidth=2)
     ax.add_artist(rectangle)
 
@@ -215,18 +220,18 @@ def plot_results(ax, Lx, Ly, positions, r, n, generations, best_index, best_gene
 
     ax.set_aspect('equal', adjustable='box')
     ax.set_title('Optimal Table Placement')
-    ax.set_xlabel('X')
-    ax.set_ylabel('Y')
+    ax.set_xlabel('x')
+    ax.set_ylabel('y')
 
 class Test:
     def rectangle_4(animate=True):
-        Lx = 30  # Width of the cafe
-        Ly = 20  # Height of the cafe
-        r = 3    # Radius of the table
-        n = 4    # Number of tables
-        population_size = 50  # Number of individuals in the population
+        Lx = 30  # width of cafe
+        Ly = 20  # height of cafe
+        r = 3    # table radius
+        n = 4    # num. of tables
+        population_size = 50  # num. of individuals in the population
         max_generations = 200
-        F_param = 0.9 # mutation parameter
+        F_param = 0.9 # mutation param.
         crossover_prob = 0.8
 
         optimal_positions = differential_evolution_table_placement(Lx, Ly, r, n, population_size=population_size, max_generations=max_generations, F= F_param, crossover_prob=crossover_prob, draw_after_each_it=animate)
@@ -238,7 +243,7 @@ class Test:
         r = 0.5
         n = 8
         population_size = 50
-        max_generations = 1000
+        max_generations = 1500
         F_param = 0.8
         crossover_prob = 0.9
 
@@ -252,6 +257,19 @@ class Test:
         n = 5
         population_size = 50
         max_generations = 200
+        F_param = 0.8
+        crossover_prob = 0.9
+
+        optimal_positions = differential_evolution_table_placement(Lx, Ly, r, n, population_size=population_size, max_generations=max_generations, F= F_param, crossover_prob=crossover_prob, draw_after_each_it=animate)
+        print("Optimal positions:", optimal_positions)
+        
+    def square_7(animate=True):
+        Lx = 6
+        Ly = 6
+        r = 0.5
+        n = 7
+        population_size = 50
+        max_generations = 1000
         F_param = 0.8
         crossover_prob = 0.9
 
